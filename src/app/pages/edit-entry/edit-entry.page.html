@@ -1,44 +1,89 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="main-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button
+        defaultHref="/home"
+        class="back-button"
+      ></ion-back-button>
     </ion-buttons>
     <ion-title>Edit Entry</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="deleteEntry()" class="delete-btn">
+        <ion-icon [icon]="trashBinOutline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <div class="form-container">
-    <ion-item>
-      <ion-label position="floating">Title (Optional)</ion-label>
-      <ion-input [(ngModel)]="title" type="text"></ion-input>
-    </ion-item>
+    <!-- Title Input -->
+    <div class="input-group">
+      <div class="input-label">
+        <ion-icon [icon]="createOutline"></ion-icon>
+        <span>Title <span class="optional">(Optional)</span></span>
+      </div>
+      <ion-item lines="none" class="custom-input">
+        <ion-input
+          [(ngModel)]="title"
+          type="text"
+          placeholder="Give your entry a title..."
+          class="title-input"
+        ></ion-input>
+      </ion-item>
+    </div>
 
-    <ion-item>
-      <ion-label position="floating">Content</ion-label>
-      <ion-textarea
-        [(ngModel)]="content"
-        rows="10"
-        placeholder="Write your thoughts here..."
-      ></ion-textarea>
-    </ion-item>
+    <!-- Content Input -->
+    <div class="input-group">
+      <div class="input-label">
+        <ion-icon [icon]="documentTextOutline"></ion-icon>
+        <span>Content <span class="required">*</span></span>
+      </div>
+      <ion-item lines="none" class="custom-input textarea-input">
+        <ion-textarea
+          [(ngModel)]="content"
+          rows="12"
+          placeholder="Write your thoughts here..."
+          class="content-textarea"
+        ></ion-textarea>
+      </ion-item>
+    </div>
 
-    <ion-item>
-      <ion-label>Privacy Setting</ion-label>
-      <ion-select [(ngModel)]="privacy">
-        <ion-select-option value="private">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          Private (Only me)
-        </ion-select-option>
-        <ion-select-option value="public">
-          <ion-icon name="globe-outline"></ion-icon>
-          Public (Visible to others)
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
+    <!-- Privacy Setting -->
+    <div class="input-group">
+      <div class="input-label">
+        <ion-icon [icon]="lockClosedOutline"></ion-icon>
+        <span>Privacy Setting</span>
+      </div>
+      <div class="privacy-options">
+        <div
+          class="privacy-option"
+          [class.active]="privacy === 'private'"
+          (click)="privacy = 'private'"
+        >
+          <ion-icon [icon]="lockClosedOutline"></ion-icon>
+          <div class="option-text">
+            <strong>Private</strong>
+            <small>Only visible to you</small>
+          </div>
+        </div>
+        <div
+          class="privacy-option"
+          [class.active]="privacy === 'public'"
+          (click)="privacy = 'public'"
+        >
+          <ion-icon [icon]="globeOutline"></ion-icon>
+          <div class="option-text">
+            <strong>Public</strong>
+            <small>Visible to everyone</small>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- Update Button -->
     <ion-button expand="block" class="update-button" (click)="updateEntry()">
-      <ion-icon name="save-outline" slot="start"></ion-icon>
+      <ion-icon [icon]="saveOutline" slot="start"></ion-icon>
       Update Entry
     </ion-button>
   </div>
