@@ -1,0 +1,290 @@
+:root {
+  --primary-dark: #1a4a53;
+  --primary-medium: #2e5a63;
+  --primary-light: #4a7c85;
+  --teal-light: #e0f2f1;
+  --teal-dark: #b2dfdb;
+  --accent: #ff9a9e;
+}
+
+ion-content {
+  --background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+  --keyboard-offset: 0px;
+}
+
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.logo-wrapper {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.logo-backdrop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    rgba(46, 90, 99, 0.1) 0%,
+    rgba(46, 90, 99, 0) 70%
+  );
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.splash-logo {
+  width: 540px;
+  max-width: 70vw;
+  filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.15));
+  margin-bottom: 12px;
+  animation: float 3s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
+}
+
+.text-container {
+  margin-top: 20px;
+  animation: slideInUp 0.6s ease-out 0.3s both;
+}
+
+.splash-title {
+  color: #1a4a53;
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #1a4a53 0%, #4a7c85 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease infinite;
+}
+
+.splash-subtitle {
+  color: #4a7c85;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 8px;
+  letter-spacing: 1px;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out 0.6s forwards;
+}
+
+.tagline-container {
+  margin-top: 15px;
+  overflow: hidden;
+}
+
+.tagline {
+  color: #6b9ea8;
+  font-size: 0.95rem;
+  font-weight: 400;
+  font-style: italic;
+  margin: 0;
+  opacity: 0;
+  animation: slideInRight 0.6s ease-out 0.9s forwards;
+  position: relative;
+  display: inline-block;
+}
+
+.tagline::before,
+.tagline::after {
+  content: '"';
+  font-size: 1.2rem;
+  color: #ff9a9e;
+}
+
+.tagline::before {
+  margin-right: 5px;
+}
+
+.tagline::after {
+  margin-left: 5px;
+}
+
+.loader-container {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out 1.2s forwards;
+}
+
+.custom-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2e5a63, #4a7c85);
+  animation: bounce 1.4s ease-in-out infinite;
+}
+
+.dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.loading-text {
+  color: #6b9ea8;
+  font-size: 0.85rem;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .splash-title {
+    font-size: 2.2rem;
+  }
+
+  .splash-subtitle {
+    font-size: 1rem;
+  }
+
+  .splash-logo {
+    width: 450px;
+  }
+
+  .logo-backdrop {
+    width: 150px;
+    height: 150px;
+  }
+
+  .loader-container {
+    bottom: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .splash-logo {
+    width: 450px;
+  }
+
+  .splash-title {
+    font-size: 1.8rem;
+  }
+
+  .logo-backdrop {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* For devices with notches */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .loader-container {
+    bottom: calc(60px + env(safe-area-inset-bottom));
+  }
+}

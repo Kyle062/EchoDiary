@@ -1,13 +1,29 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>splash</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding">
+  <div class="splash-container">
+    <div class="logo-wrapper">
+      <div class="logo-backdrop"></div>
+      <img
+        src="../../../assets/EchoDiaryLogo.png"
+        alt="EchoDiary Logo"
+        class="splash-logo"
+      />
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">splash</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <div class="text-container">
+      <h1 class="splash-title">EchoDiary</h1>
+      <p class="splash-subtitle">Your Voice, Your Memories</p>
+      <div class="tagline-container">
+        <p class="tagline">Every story matters</p>
+      </div>
+    </div>
+
+    <div class="loader-container">
+      <div class="custom-loader">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <p class="loading-text">Loading your diary...</p>
+    </div>
+  </div>
 </ion-content>
