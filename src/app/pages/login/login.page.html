@@ -1,27 +1,94 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding">
-  <div style="text-align: center; margin-bottom: 20px">
-    <img src="assets/icon/logo.png" style="width: 100px" />
+  <div class="login-container">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <div class="logo-wrapper">
+        <div class="logo-glow"></div>
+        <img
+          src="../../../assets/EchoDiaryLogo.png"
+          alt="EchoDiary Logo"
+          class="login-logo"
+        />
+      </div>
+      <h2 class="welcome-title">Welcome Back</h2>
+      <p class="welcome-subtitle">Sign in to continue your diary journey</p>
+    </div>
+
+    <!-- Login Form -->
+    <form (ngSubmit)="onLogin()" class="login-form">
+      <!-- Email Input -->
+      <div class="input-wrapper">
+        <ion-item lines="none" class="custom-input">
+          <ion-icon
+            name="mail-outline"
+            slot="start"
+            class="input-icon"
+          ></ion-icon>
+          <ion-label position="floating">Email Address</ion-label>
+          <ion-input
+            type="email"
+            placeholder="user@example.com"
+            [(ngModel)]="email"
+            name="email"
+            required
+            [clearInput]="true"
+          >
+          </ion-input>
+        </ion-item>
+        <div class="input-focus-effect"></div>
+      </div>
+
+      <!-- Password Input -->
+      <div class="input-wrapper">
+        <ion-item lines="none" class="custom-input">
+          <ion-icon
+            name="lock-closed-outline"
+            slot="start"
+            class="input-icon"
+          ></ion-icon>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="password"
+            name="password"
+            required
+          >
+          </ion-input>
+          <ion-icon
+            slot="end"
+            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+            class="password-toggle"
+            (click)="togglePasswordVisibility()"
+          >
+          </ion-icon>
+        </ion-item>
+        <div class="input-focus-effect"></div>
+      </div>
+
+      <!-- Forgot Password -->
+      <div class="forgot-password">
+        <a (click)="onForgotPassword()" class="forgot-link">Forgot Password?</a>
+      </div>
+
+      <!-- Sign In Button -->
+      <ion-button
+        expand="block"
+        class="login-button"
+        type="submit"
+        [disabled]="!email || !password || isLoading"
+      >
+        <ion-icon name="log-in-outline" slot="start"></ion-icon>
+        {{ isLoading ? 'Signing in...' : 'Sign In' }}
+        <ion-spinner *ngIf="isLoading" name="dots" slot="end"></ion-spinner>
+      </ion-button>
+    </form>
+
+    <!-- Register Link -->
+    <div class="register-section">
+      <p class="register-text">
+        New to EchoDiary?
+        <a routerLink="/register" class="register-link">Create an account</a>
+      </p>
+    </div>
   </div>
-
-  <ion-item>
-    <ion-label position="floating">Email Address</ion-label>
-    <ion-input type="email" placeholder="user@email.com"></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="floating">Password</ion-label>
-    <ion-input type="password"></ion-input>
-  </ion-item>
-
-  <ion-button expand="block" class="ion-margin-top">Sign In</ion-button>
-
-  <p class="ion-text-center">
-    Don't have an account? <a routerLink="/register">Register</a>
-  </p>
 </ion-content>

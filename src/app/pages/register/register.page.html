@@ -1,13 +1,144 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">register</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div class="register-container">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <div class="logo-wrapper">
+        <div class="logo-glow"></div>
+        <img
+          src="../../../assets/EchoDiaryLogo.png"
+          alt="EchoDiary Logo"
+          class="register-logo"
+        />
+      </div>
+      <h2 class="welcome-title">Join EchoDiary</h2>
+      <p class="welcome-subtitle">Start your diary journey today</p>
+    </div>
+
+    <!-- Register Form -->
+    <form (ngSubmit)="onRegister()" class="register-form">
+      <!-- Email Input -->
+      <div class="input-wrapper">
+        <ion-item lines="none" class="custom-input">
+          <ion-icon
+            name="mail-outline"
+            slot="start"
+            class="input-icon"
+          ></ion-icon>
+          <ion-label position="floating">Email Address</ion-label>
+          <ion-input
+            type="email"
+            placeholder="user@example.com"
+            [(ngModel)]="email"
+            name="email"
+            required
+            [clearInput]="true"
+          >
+          </ion-input>
+        </ion-item>
+        <div class="input-focus-effect"></div>
+      </div>
+
+      <!-- Password Input -->
+      <div class="input-wrapper">
+        <ion-item lines="none" class="custom-input">
+          <ion-icon
+            name="lock-closed-outline"
+            slot="start"
+            class="input-icon"
+          ></ion-icon>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="password"
+            name="password"
+            required
+          >
+          </ion-input>
+          <ion-icon
+            slot="end"
+            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+            class="password-toggle"
+            (click)="togglePasswordVisibility()"
+          >
+          </ion-icon>
+        </ion-item>
+        <div class="input-focus-effect"></div>
+      </div>
+
+      <!-- Confirm Password Input -->
+      <div class="input-wrapper">
+        <ion-item lines="none" class="custom-input">
+          <ion-icon
+            name="checkmark-done-outline"
+            slot="start"
+            class="input-icon"
+          ></ion-icon>
+          <ion-label position="floating">Confirm Password</ion-label>
+          <ion-input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            required
+          >
+          </ion-input>
+          <ion-icon
+            slot="end"
+            [name]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"
+            class="password-toggle"
+            (click)="toggleConfirmPasswordVisibility()"
+          >
+          </ion-icon>
+        </ion-item>
+        <div class="input-focus-effect"></div>
+      </div>
+
+      <!-- Password Requirements -->
+      <div class="password-requirements" *ngIf="password">
+        <p class="requirement-title">Password must contain:</p>
+        <div class="requirement-list">
+          <p [class.valid]="password.length >= 6" class="requirement-item">
+            <ion-icon
+              [name]="password.length >= 6 ? 'checkmark-circle-outline' : 'ellipse-outline'"
+            ></ion-icon>
+            At least 6 characters
+          </p>
+          <p [class.valid]="hasUpperCase(password)" class="requirement-item">
+            <ion-icon
+              [name]="hasUpperCase(password) ? 'checkmark-circle-outline' : 'ellipse-outline'"
+            ></ion-icon>
+            At least 1 uppercase letter
+          </p>
+          <p [class.valid]="hasNumber(password)" class="requirement-item">
+            <ion-icon
+              [name]="hasNumber(password) ? 'checkmark-circle-outline' : 'ellipse-outline'"
+            ></ion-icon>
+            At least 1 number
+          </p>
+        </div>
+      </div>
+
+     
+
+      <!-- Register Button -->
+      <ion-button
+        expand="block"
+        class="register-button"
+        type="submit"
+        [disabled]="!email || !password || !confirmPassword || !agreeTerms || isLoading"
+      >
+        <ion-icon name="person-add-outline" slot="start"></ion-icon>
+        {{ isLoading ? 'Creating Account...' : 'Create Account' }}
+        <ion-spinner *ngIf="isLoading" name="dots" slot="end"></ion-spinner>
+      </ion-button>
+    </form>
+
+    <!-- Login Link -->
+    <div class="login-section">
+      <p class="login-text">
+        Already have an account?
+        <a routerLink="/login" class="login-link">Sign In</a>
+      </p>
+    </div>
+  </div>
 </ion-content>
