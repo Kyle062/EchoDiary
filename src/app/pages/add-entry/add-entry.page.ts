@@ -1,19 +1,60 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ToastController } from '@ionic/angular';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonButton,
+  IonIcon,
+  IonItem,
+  IonInput,
+  IonTextarea,
+  ToastController,
+} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { DiaryService } from '../../services/diary';
 import { DiaryEntry } from '../../models/diary-entry.model';
+import {
+  createOutline,
+  documentTextOutline,
+  lockClosedOutline,
+  globeOutline,
+  saveOutline,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-add-entry',
   templateUrl: './add-entry.page.html',
   styleUrls: ['./add-entry.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonButton,
+    IonIcon,
+    IonItem,
+    IonInput,
+    IonTextarea,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class AddEntryPage {
+  // Icons
+  public createOutline = createOutline;
+  public documentTextOutline = documentTextOutline;
+  public lockClosedOutline = lockClosedOutline;
+  public globeOutline = globeOutline;
+  public saveOutline = saveOutline;
+
   title: string = '';
   content: string = '';
   privacy: 'public' | 'private' = 'private';
@@ -51,6 +92,12 @@ export class AddEntryPage {
       duration: 2000,
       color,
       position: 'bottom',
+      buttons: [
+        {
+          icon: 'close',
+          role: 'cancel',
+        },
+      ],
     });
     await toast.present();
   }

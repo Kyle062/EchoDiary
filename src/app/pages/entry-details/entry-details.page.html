@@ -1,15 +1,18 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="main-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button
+        defaultHref="/home"
+        class="back-button"
+      ></ion-back-button>
     </ion-buttons>
     <ion-title>Entry Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="editEntry()">
-        <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+      <ion-button (click)="editEntry()" class="edit-btn">
+        <ion-icon [icon]="createOutline" slot="icon-only"></ion-icon>
       </ion-button>
-      <ion-button (click)="deleteEntry()" color="danger">
-        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      <ion-button (click)="deleteEntry()" class="delete-btn">
+        <ion-icon [icon]="trashBinOutline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -17,30 +20,60 @@
 
 <ion-content class="ion-padding" *ngIf="entry">
   <div class="details-container">
+    <!-- Header Section -->
     <div class="entry-header">
-      <h1>{{ entry.title || 'Untitled' }}</h1>
-      <ion-badge [color]="entry.privacy === 'public' ? 'success' : 'warning'">
-        <ion-icon
-          [name]="entry.privacy === 'public' ? 'globe-outline' : 'lock-closed-outline'"
-        ></ion-icon>
-        {{ entry.privacy }}
-      </ion-badge>
+      <div class="title-section">
+        <h1>{{ entry.title || 'Untitled' }}</h1>
+        <div
+          class="privacy-badge"
+          [class.is-public]="entry.privacy === 'public'"
+        >
+          <ion-icon
+            [icon]="entry.privacy === 'public' ? globeOutline : lockClosedOutline"
+          ></ion-icon>
+          <span>{{ entry.privacy }}</span>
+        </div>
+      </div>
     </div>
 
+    <!-- Date Section -->
     <div class="entry-date">
-      <ion-icon name="calendar-outline"></ion-icon>
-      <span>{{ formatDate(entry.date) }}</span>
+      <div class="date-icon-wrapper">
+        <ion-icon [icon]="calendarOutline"></ion-icon>
+      </div>
+      <div class="date-info">
+        <span class="date-label">Written on</span>
+        <span class="date-value">{{ formatDate(entry.date) }}</span>
+      </div>
     </div>
 
+    <!-- Content Section -->
     <div class="entry-content">
-      <p>{{ entry.content }}</p>
+      <div class="content-label">
+        <ion-icon [icon]="documentTextOutline"></ion-icon>
+        <span>Entry Content</span>
+      </div>
+      <div class="content-text">
+        <p>{{ entry.content }}</p>
+      </div>
     </div>
 
+    <!-- Footer Section -->
     <div class="entry-footer">
-      <small>Created: {{ formatDate(entry.createdAt) }}</small>
-      <small *ngIf="entry.updatedAt !== entry.createdAt"
-        >Updated: {{ formatDate(entry.updatedAt) }}</small
-      >
+      <div class="footer-item">
+        <ion-icon [icon]="timeOutline"></ion-icon>
+        <div class="footer-info">
+          <small class="footer-label">Created</small>
+          <small class="footer-value">{{ formatDate(entry.createdAt) }}</small>
+        </div>
+      </div>
+      <div class="footer-item" *ngIf="entry.updatedAt !== entry.createdAt">
+        <ion-icon [icon]="refreshOutline"></ion-icon>
+        <div class="footer-info">
+          <small class="footer-label">Last Updated</small>
+          <small class="footer-value">{{ formatDate(entry.updatedAt) }}</small>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

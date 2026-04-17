@@ -1,15 +1,19 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="main-toolbar">
     <ion-title>EchoDiary</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="logout()">
-        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+      <ion-button (click)="logout()" class="logout-btn">
+        <ion-icon [icon]="logOutOutline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="activeFilter" (ionChange)="filterEntries()">
+  <ion-toolbar class="segment-toolbar">
+    <ion-segment
+      [(ngModel)]="activeFilter"
+      (ionChange)="filterEntries()"
+      mode="ios"
+    >
       <ion-segment-button value="all">
         <ion-label>All</ion-label>
       </ion-segment-button>
@@ -24,56 +28,60 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="welcome-section">
-    <h2>Welcome, {{ userEmail.split('@')[0] }}! 👋</h2>
-    <p>Your thoughts, your memories, your diary</p>
+  <div class="welcome-card">
+    <div class="welcome-text">
+      <h2>Hello, {{ userEmail.split('@')[0] }}! 👋</h2>
+      <p>Capture your thoughts for today.</p>
+    </div>
+    <ion-button fill="clear" class="add-entry-fab" (click)="goToAddEntry()">
+      <ion-icon [icon]="pencilOutline"></ion-icon>
+    </ion-button>
   </div>
 
-  <ion-button expand="block" class="add-button" (click)="goToAddEntry()">
-    <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-    Write New Entry
-  </ion-button>
-
   <div *ngIf="filteredEntries.length === 0" class="empty-state">
-    <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
-    <p>No entries found</p>
-    <p class="empty-subtitle">Start writing your first diary entry!</p>
+    <div class="empty-icon-wrapper">
+      <ion-icon [icon]="leafOutline"></ion-icon>
+    </div>
+    <h3>Peaceful & Quiet</h3>
+    <p>Your diary is waiting for its first story.</p>
   </div>
 
   <div
-    *ngFor="let entry of filteredEntries"
+    *ngFor="let entry of filteredEntries; let i = index"
     class="entry-card"
+    [style.animation-delay]="(i * 0.05) + 's'"
     (click)="viewEntry(entry.id)"
   >
-    <div class="entry-header">
-      <div class="entry-title-section">
-        <h4>{{ entry.title || 'Untitled' }}</h4>
-        <ion-badge [color]="entry.privacy === 'public' ? 'success' : 'warning'">
+    <div class="card-header">
+      <div class="title-group">
+        <h4>{{ entry.title || 'A Moment in Time' }}</h4>
+        <div
+          class="privacy-indicator"
+          [class.is-public]="entry.privacy === 'public'"
+        >
           <ion-icon
-            [name]="entry.privacy === 'public' ? 'globe-outline' : 'lock-closed-outline'"
+            [icon]="entry.privacy === 'public' ? globeOutline : lockClosedOutline"
           ></ion-icon>
-          {{ entry.privacy }}
-        </ion-badge>
+          <span>{{ entry.privacy }}</span>
+        </div>
       </div>
       <ion-button
         fill="clear"
-        color="danger"
+        color="medium"
         (click)="deleteEntry(entry.id, $event)"
       >
-        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        <ion-icon [icon]="trashBinOutline" slot="icon-only"></ion-icon>
       </ion-button>
     </div>
 
-    <div class="entry-content-preview">
-      <p>
-        {{ entry.content.length > 100 ? (entry.content.substring(0, 100) +
-        '...') : entry.content }}
-      </p>
-    </div>
+    <p class="content-preview">{{ entry.content }}</p>
 
-    <div class="entry-footer">
-      <ion-icon name="calendar-outline"></ion-icon>
-      <span>{{ formatDate(entry.date) }}</span>
+    <div class="card-footer">
+      <div class="date-info">
+        <ion-icon [icon]="timeOutline"></ion-icon>
+        <time>{{ formatDate(entry.date) }}</time>
+      </div>
+      <ion-icon [icon]="chevronForwardOutline" class="arrow-icon"></ion-icon>
     </div>
   </div>
 </ion-content>

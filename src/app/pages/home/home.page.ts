@@ -1,8 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, AlertController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel,
+  IonBadge,
+  AlertController,
+  ToastController,
+} from '@ionic/angular/standalone';
+// Import the actual icon data from ionicons
+import {
+  logOutOutline,
+  pencilOutline,
+  leafOutline,
+  globeOutline,
+  lockClosedOutline,
+  trashBinOutline,
+  timeOutline,
+  chevronForwardOutline,
+} from 'ionicons/icons';
 import { DiaryService } from '../../services/diary';
 import { DiaryEntry } from '../../models/diary-entry.model';
 
@@ -11,9 +36,33 @@ import { DiaryEntry } from '../../models/diary-entry.model';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonSegment,
+    IonSegmentButton,
+    IonLabel,
+    IonBadge,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class HomePage implements OnInit {
+  // Define public variables for the icons
+  public logOutOutline = logOutOutline;
+  public pencilOutline = pencilOutline;
+  public leafOutline = leafOutline;
+  public globeOutline = globeOutline;
+  public lockClosedOutline = lockClosedOutline;
+  public trashBinOutline = trashBinOutline;
+  public timeOutline = timeOutline;
+  public chevronForwardOutline = chevronForwardOutline;
+
   allEntries: DiaryEntry[] = [];
   filteredEntries: DiaryEntry[] = [];
   activeFilter: string = 'all';
@@ -28,7 +77,6 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.userEmail = localStorage.getItem('userEmail') || 'Guest';
-
     this.diaryService.getEntries().subscribe((entries) => {
       this.allEntries = entries;
       this.filterEntries();
@@ -59,7 +107,6 @@ export class HomePage implements OnInit {
 
   async deleteEntry(id: string, event: Event) {
     event.stopPropagation();
-
     const alert = await this.alertController.create({
       header: 'Delete Entry',
       message: 'Are you sure you want to delete this entry?',
