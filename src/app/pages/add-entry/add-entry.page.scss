@@ -1,0 +1,19 @@
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.save-button {
+  --background: linear-gradient(135deg, #2e5a63 0%, #4a7c85 100%);
+  --border-radius: 12px;
+  margin-top: 30px;
+  height: 48px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+ion-item {
+  margin-bottom: 20px;
+  --border-radius: 12px;
+  --background: rgba(255, 255, 255, 0.9);
+}

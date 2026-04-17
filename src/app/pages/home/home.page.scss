@@ -1,0 +1,124 @@
+:root {
+  --primary-dark: #1a4a53;
+  --primary-medium: #2e5a63;
+  --primary-light: #4a7c85;
+}
+
+ion-header ion-toolbar:first-child {
+  --background: linear-gradient(135deg, #2e5a63 0%, #4a7c85 100%);
+  --color: white;
+}
+
+ion-content {
+  --background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+}
+
+.welcome-section {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+
+  h2 {
+    color: var(--primary-dark);
+    margin: 0 0 10px 0;
+  }
+
+  p {
+    color: var(--primary-light);
+    margin: 0;
+  }
+}
+
+.add-button {
+  --background: linear-gradient(135deg, #2e5a63 0%, #4a7c85 100%);
+  --border-radius: 12px;
+  margin-bottom: 30px;
+  height: 50px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+
+  .empty-icon {
+    font-size: 64px;
+    color: var(--primary-light);
+    margin-bottom: 20px;
+  }
+
+  p {
+    color: var(--primary-dark);
+    margin: 0;
+
+    &.empty-subtitle {
+      color: var(--primary-light);
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.entry-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+
+    .entry-title-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      h4 {
+        margin: 0;
+        color: var(--primary-dark);
+      }
+
+      ion-badge {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  .entry-content-preview p {
+    color: #666;
+   
+    line-height: 1.4;
+    margin: 0 0 12px 0;
+  }
+
+  .entry-footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary-light);
+    font-size: 0.8rem;
+
+    ion-icon {
+      font-size: 14px;
+    }
+  }
+}

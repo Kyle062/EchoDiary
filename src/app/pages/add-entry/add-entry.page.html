@@ -1,13 +1,45 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>add-entry</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>New Entry</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">add-entry</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div class="form-container">
+    <ion-item>
+      <ion-label position="floating">Title (Optional)</ion-label>
+      <ion-input [(ngModel)]="title" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Content</ion-label>
+      <ion-textarea
+        [(ngModel)]="content"
+        rows="10"
+        placeholder="Write your thoughts here..."
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Privacy Setting</ion-label>
+      <ion-select [(ngModel)]="privacy">
+        <ion-select-option value="private">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          Private (Only me)
+        </ion-select-option>
+        <ion-select-option value="public">
+          <ion-icon name="globe-outline"></ion-icon>
+          Public (Visible to others)
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="block" class="save-button" (click)="saveEntry()">
+      <ion-icon name="save-outline" slot="start"></ion-icon>
+      Save Entry
+    </ion-button>
+  </div>
 </ion-content>

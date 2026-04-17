@@ -78,7 +78,18 @@ export class LoginPage implements OnInit {
     await loading.present();
 
     setTimeout(async () => {
-      if (this.email === 'demo@echodiary.com' && this.password === 'demo123') {
+      // CHECK REGISTERED USERS FIRST
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const validUser = users.find(
+        (user: any) =>
+          user.email === this.email && user.password === this.password,
+      );
+
+      // ALSO CHECK DEMO ACCOUNT
+      const isDemoAccount =
+        this.email === 'demo@echodiary.com' && this.password === 'demo123';
+
+      if (validUser || isDemoAccount) {
         if (this.rememberMe) {
           localStorage.setItem('savedEmail', this.email);
           localStorage.setItem('savedPassword', this.password);
@@ -97,20 +108,23 @@ export class LoginPage implements OnInit {
         await this.showToast('Login successful! Welcome back!', 'success');
 
         setTimeout(() => {
-          this.router.navigateByUrl('/home');
+          this.navCtrl.navigateRoot('/home');
         }, 500);
       } else {
         await loading.dismiss();
         this.isLoading = false;
 
-        if (this.email !== 'demo@echodiary.com') {
-          await this.showToast(
-            'Email not found. Please use demo@echodiary.com',
-            'danger',
-          );
-        } else if (this.password !== 'demo123') {
+        // Check if user exists but password is wrong
+        const userExists = users.some((user: any) => user.email === this.email);
+
+        if (userExists) {
           await this.showToast(
             'Incorrect password. Please try again.',
+            'danger',
+          );
+        } else if (this.email !== 'demo@echodiary.com') {
+          await this.showToast(
+            'Email not found. Please register first.',
             'danger',
           );
         } else {
@@ -128,6 +142,18 @@ export class LoginPage implements OnInit {
   async onForgotPassword() {
     if (!this.email) {
       await this.showToast('Please enter your email address first', 'warning');
+      return;
+    }
+
+    // Check if email exists in registered users
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const userExists = users.some((user: any) => user.email === this.email);
+
+    if (!userExists && this.email !== 'demo@echodiary.com') {
+      await this.showToast(
+        'Email not found. Please register first.',
+        'warning',
+      );
       return;
     }
 

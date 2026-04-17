@@ -1,13 +1,46 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>entry-details</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Entry Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="editEntry()">
+        <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button (click)="deleteEntry()" color="danger">
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">entry-details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding" *ngIf="entry">
+  <div class="details-container">
+    <div class="entry-header">
+      <h1>{{ entry.title || 'Untitled' }}</h1>
+      <ion-badge [color]="entry.privacy === 'public' ? 'success' : 'warning'">
+        <ion-icon
+          [name]="entry.privacy === 'public' ? 'globe-outline' : 'lock-closed-outline'"
+        ></ion-icon>
+        {{ entry.privacy }}
+      </ion-badge>
+    </div>
+
+    <div class="entry-date">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <span>{{ formatDate(entry.date) }}</span>
+    </div>
+
+    <div class="entry-content">
+      <p>{{ entry.content }}</p>
+    </div>
+
+    <div class="entry-footer">
+      <small>Created: {{ formatDate(entry.createdAt) }}</small>
+      <small *ngIf="entry.updatedAt !== entry.createdAt"
+        >Updated: {{ formatDate(entry.updatedAt) }}</small
+      >
+    </div>
+  </div>
 </ion-content>

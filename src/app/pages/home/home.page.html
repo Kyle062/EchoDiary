@@ -1,13 +1,79 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>home</ion-title>
+    <ion-title>EchoDiary</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="activeFilter" (ionChange)="filterEntries()">
+      <ion-segment-button value="all">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="public">
+        <ion-label>Public</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="private">
+        <ion-label>Private</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div class="welcome-section">
+    <h2>Welcome, {{ userEmail.split('@')[0] }}! 👋</h2>
+    <p>Your thoughts, your memories, your diary</p>
+  </div>
+
+  <ion-button expand="block" class="add-button" (click)="goToAddEntry()">
+    <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+    Write New Entry
+  </ion-button>
+
+  <div *ngIf="filteredEntries.length === 0" class="empty-state">
+    <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+    <p>No entries found</p>
+    <p class="empty-subtitle">Start writing your first diary entry!</p>
+  </div>
+
+  <div
+    *ngFor="let entry of filteredEntries"
+    class="entry-card"
+    (click)="viewEntry(entry.id)"
+  >
+    <div class="entry-header">
+      <div class="entry-title-section">
+        <h4>{{ entry.title || 'Untitled' }}</h4>
+        <ion-badge [color]="entry.privacy === 'public' ? 'success' : 'warning'">
+          <ion-icon
+            [name]="entry.privacy === 'public' ? 'globe-outline' : 'lock-closed-outline'"
+          ></ion-icon>
+          {{ entry.privacy }}
+        </ion-badge>
+      </div>
+      <ion-button
+        fill="clear"
+        color="danger"
+        (click)="deleteEntry(entry.id, $event)"
+      >
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="entry-content-preview">
+      <p>
+        {{ entry.content.length > 100 ? (entry.content.substring(0, 100) +
+        '...') : entry.content }}
+      </p>
+    </div>
+
+    <div class="entry-footer">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <span>{{ formatDate(entry.date) }}</span>
+    </div>
+  </div>
 </ion-content>

@@ -1,7 +1,11 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'splash', pathMatch: 'full' }, // Redirect to splash
+  {
+    path: '',
+    redirectTo: 'splash',
+    pathMatch: 'full',
+  },
   {
     path: 'splash',
     loadComponent: () =>
@@ -19,18 +23,24 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
+    loadComponent: () =>
+      import('./pages/home/home.page').then((m) => m.HomePage),
   },
   {
     path: 'add-entry',
-    loadComponent: () => import('./pages/add-entry/add-entry.page').then( m => m.AddEntryPage)
+    loadComponent: () =>
+      import('./pages/add-entry/add-entry.page').then((m) => m.AddEntryPage),
   },
   {
-    path: 'entry-details',
-    loadComponent: () => import('./pages/entry-details/entry-details.page').then( m => m.EntryDetailsPage)
+    path: 'entry-details/:id',
+    loadComponent: () =>
+      import('./pages/entry-details/entry-details.page').then(
+        (m) => m.EntryDetailsPage,
+      ),
   },
   {
-    path: 'edit-entry',
-    loadComponent: () => import('./pages/edit-entry/edit-entry.page').then( m => m.EditEntryPage)
+    path: 'edit-entry/:id',
+    loadComponent: () =>
+      import('./pages/edit-entry/edit-entry.page').then((m) => m.EditEntryPage),
   },
 ];
