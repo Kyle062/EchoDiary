@@ -1,3 +1,9 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">EchoDiary</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="ion-padding">
   <div class="login-container">
     <!-- Logo Section -->
@@ -8,7 +14,12 @@
           src="../../../assets/EchoDiaryLogo.png"
           alt="EchoDiary Logo"
           class="login-logo"
+          onerror="this.style.display='none'; document.querySelector('.logo-fallback').style.display='flex'"
         />
+        <div class="logo-fallback">
+          <ion-icon name="book-outline"></ion-icon>
+          <span>EchoDiary</span>
+        </div>
       </div>
       <h2 class="welcome-title">Welcome Back</h2>
       <p class="welcome-subtitle">Sign in to continue your diary journey</p>
@@ -18,56 +29,53 @@
     <form (ngSubmit)="onLogin()" class="login-form">
       <!-- Email Input -->
       <div class="input-wrapper">
-        <ion-item lines="none" class="custom-input">
-          <ion-icon
-            name="mail-outline"
-            slot="start"
-            class="input-icon"
-          ></ion-icon>
-          <ion-label position="floating">Email Address</ion-label>
+        <ion-item lines="none" class="custom-input" [class.focused]="email.length > 0">
+          <ion-icon name="mail-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-label position="floating" class="custom-label">Email Address</ion-label>
           <ion-input
             type="email"
-            placeholder="user@example.com"
+            placeholder=" "
             [(ngModel)]="email"
             name="email"
             required
             [clearInput]="true"
-          >
-          </ion-input>
+            class="custom-ion-input"
+          ></ion-input>
         </ion-item>
-        <div class="input-focus-effect"></div>
       </div>
 
       <!-- Password Input -->
       <div class="input-wrapper">
-        <ion-item lines="none" class="custom-input">
-          <ion-icon
-            name="lock-closed-outline"
-            slot="start"
-            class="input-icon"
-          ></ion-icon>
-          <ion-label position="floating">Password</ion-label>
+        <ion-item lines="none" class="custom-input" [class.focused]="password.length > 0">
+          <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-label position="floating" class="custom-label">Password</ion-label>
           <ion-input
             [type]="showPassword ? 'text' : 'password'"
+            placeholder=" "
             [(ngModel)]="password"
             name="password"
             required
-          >
-          </ion-input>
-          <ion-icon
+            class="custom-ion-input"
+          ></ion-input>
+          <ion-button
+            fill="clear"
             slot="end"
-            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
-            class="password-toggle"
-            (click)="togglePasswordVisibility()"
+            class="password-toggle-btn"
+            (click)="togglePasswordVisibility(); $event.preventDefault()"
           >
-          </ion-icon>
+            <ion-icon
+              [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+              class="password-toggle-icon"
+            ></ion-icon>
+          </ion-button>
         </ion-item>
-        <div class="input-focus-effect"></div>
       </div>
 
       <!-- Forgot Password -->
       <div class="forgot-password">
-        <a (click)="onForgotPassword()" class="forgot-link">Forgot Password?</a>
+        <a (click)="onForgotPassword(); $event.preventDefault()" class="forgot-link">
+          Forgot Password?
+        </a>
       </div>
 
       <!-- Sign In Button -->
@@ -79,7 +87,7 @@
       >
         <ion-icon name="log-in-outline" slot="start"></ion-icon>
         {{ isLoading ? 'Signing in...' : 'Sign In' }}
-        <ion-spinner *ngIf="isLoading" name="dots" slot="end"></ion-spinner>
+        <ion-spinner *ngIf="isLoading" name="dots" slot="end" style="width: 20px; height: 20px;"></ion-spinner>
       </ion-button>
     </form>
 

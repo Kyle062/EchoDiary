@@ -2,19 +2,52 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  IonicModule,
-  NavController,
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonIcon,
+  IonButton,
+  IonSpinner,
   ToastController,
   LoadingController,
-} from '@ionic/angular';
+  NavController,
+} from '@ionic/angular/standalone';
 import { RouterLink, Router } from '@angular/router';
+import { addIcons } from 'ionicons';
+import {
+  mailOutline,
+  lockClosedOutline,
+  eyeOutline,
+  eyeOffOutline,
+  logInOutline,
+  alertCircleOutline,
+  checkmarkCircleOutline,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonItem,
+    IonLabel,
+    IonInput,
+    IonIcon,
+    IonButton,
+    IonSpinner,
+  ],
 })
 export class LoginPage implements OnInit {
   email: string = '';
@@ -28,7 +61,18 @@ export class LoginPage implements OnInit {
     private toastController: ToastController,
     private loadingController: LoadingController,
     private router: Router,
-  ) {}
+  ) {
+    // Register icons for standalone component
+    addIcons({
+      mailOutline,
+      lockClosedOutline,
+      eyeOutline,
+      eyeOffOutline,
+      logInOutline,
+      alertCircleOutline,
+      checkmarkCircleOutline,
+    });
+  }
 
   ngOnInit() {
     this.loadSavedCredentials();
@@ -78,14 +122,12 @@ export class LoginPage implements OnInit {
     await loading.present();
 
     setTimeout(async () => {
-      // CHECK REGISTERED USERS FIRST
       const users = JSON.parse(localStorage.getItem('users') || '[]');
       const validUser = users.find(
         (user: any) =>
           user.email === this.email && user.password === this.password,
       );
 
-      // ALSO CHECK DEMO ACCOUNT
       const isDemoAccount =
         this.email === 'demo@echodiary.com' && this.password === 'demo123';
 
@@ -114,26 +156,18 @@ export class LoginPage implements OnInit {
         await loading.dismiss();
         this.isLoading = false;
 
-        // Check if user exists but password is wrong
         const userExists = users.some((user: any) => user.email === this.email);
 
         if (userExists) {
-          await this.showToast(
-            'Incorrect password. Please try again.',
-            'danger',
-          );
+          await this.showToast('Incorrect password. Please try again.', 'danger');
         } else if (this.email !== 'demo@echodiary.com') {
-          await this.showToast(
-            'Email not found. Please register first.',
-            'danger',
-          );
+          await this.showToast('Email not found. Please register first.', 'danger');
         } else {
           await this.showToast(
             'Invalid credentials. Use demo@echodiary.com / demo123',
             'danger',
           );
         }
-
         this.password = '';
       }
     }, 1500);
@@ -145,15 +179,11 @@ export class LoginPage implements OnInit {
       return;
     }
 
-    // Check if email exists in registered users
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const userExists = users.some((user: any) => user.email === this.email);
 
     if (!userExists && this.email !== 'demo@echodiary.com') {
-      await this.showToast(
-        'Email not found. Please register first.',
-        'warning',
-      );
+      await this.showToast('Email not found. Please register first.', 'warning');
       return;
     }
 
@@ -166,20 +196,8 @@ export class LoginPage implements OnInit {
 
     setTimeout(async () => {
       await loading.dismiss();
-      await this.showToast(
-        `Password reset link sent to ${this.email}`,
-        'success',
-      );
+      await this.showToast(`Password reset link sent to ${this.email}`, 'success');
     }, 2000);
-  }
-
-  async quickFillDemo() {
-    this.email = 'demo@echodiary.com';
-    this.password = 'demo123';
-    await this.showToast(
-      'Demo credentials filled! Click Sign In to continue.',
-      'success',
-    );
   }
 
   async showToast(message: string, color: string = 'primary') {
@@ -188,23 +206,10 @@ export class LoginPage implements OnInit {
       duration: 3000,
       color: color,
       position: 'top',
-      buttons: [
-        {
-          icon: 'close',
-          role: 'cancel',
-        },
-      ],
+      buttons: [{ icon: 'close', role: 'cancel' }],
       cssClass: 'custom-toast',
     });
     await toast.present();
-  }
-
-  async googleLogin() {
-    await this.showToast('Google login coming soon!', 'medium');
-  }
-
-  async appleLogin() {
-    await this.showToast('Apple login coming soon!', 'medium');
   }
 
   clearForm() {
